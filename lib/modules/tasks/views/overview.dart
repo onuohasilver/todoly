@@ -87,12 +87,33 @@ class TasksOverview extends StatelessWidget {
                     fontSize: 24)),
             const YSpace(12),
             Container(
-              height: 50,
+              // height: 50.h,
               width: double.infinity,
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(10)),
-              child: Row(
-                children: const [],
+              child: GestureDetector(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Checkbox(value: true, onChanged: (_) {}),
+                        SizedBox(
+                          width: 250,
+                          child: Text(
+                              "Get groceries from the greee groceries from the greee groceries from the greee ",
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context).textTheme.subtitle1),
+                        ),
+                        const Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Icon(Icons.close, color: Colors.red.shade400),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
             )
           ],
