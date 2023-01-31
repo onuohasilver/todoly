@@ -30,7 +30,7 @@ class CustomFlatButton extends StatelessWidget {
       onPressed: onTap,
       style: ButtonStyle(
           elevation: MaterialStateProperty.all(elevation.toDouble()),
-          minimumSize: MaterialStateProperty.all(const Size(250, 45)),
+          minimumSize: MaterialStateProperty.all(const Size(250, 50)),
           shape: MaterialStateProperty.all(
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(7))),
           side: hasBorder

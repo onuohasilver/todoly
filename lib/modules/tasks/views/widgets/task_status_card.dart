@@ -13,43 +13,41 @@ class TaskStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        height: 60.h,
-        clipBehavior: Clip.hardEdge,
-        decoration: BoxDecoration(
-          color: Colors.black,
-          borderRadius: BorderRadius.circular(10),
-          // border: Border.all(color: color, width: 3),
-        ),
-        child: Row(
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10.w),
-              alignment: Alignment.center,
-              width: 60.w,
-              height: 60.h,
-              child: Text(value,
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
-                      color: color,
-                      fontWeight: FontWeight.bold,
-                      decoration: TextDecoration.lineThrough)),
+    return Container(
+      height: 60.h,
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+        color: Colors.black,
+        borderRadius: BorderRadius.circular(10),
+        // border: Border.all(color: color, width: 3),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            alignment: Alignment.center,
+            width: 60.w,
+            height: 60.h,
+            child: Text(value,
+                style: Theme.of(context).textTheme.headline4!.copyWith(
+                    color: color,
+                    fontWeight: FontWeight.bold,
+                    decoration: TextDecoration.lineThrough)),
+          ),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(label,
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1!
+                        .copyWith(color: Colors.grey)),
+              ],
             ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(label,
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1!
-                          .copyWith(color: Colors.grey)),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
