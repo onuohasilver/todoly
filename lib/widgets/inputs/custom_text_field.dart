@@ -12,7 +12,8 @@ class CustomTextField extends StatelessWidget {
       this.onChanged,
       this.maxLines = 1,
       this.formatter,
-      this.initialValue})
+      this.initialValue,
+      required this.controller})
       : super(key: key);
   final String label;
   final String? hint, initialValue;
@@ -21,6 +22,7 @@ class CustomTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final List<TextInputFormatter>? formatter;
   final int maxLines;
+  final TextEditingController controller;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -33,6 +35,7 @@ class CustomTextField extends StatelessWidget {
                 .copyWith(fontWeight: FontWeight.bold)),
         const YSpace(5),
         TextFormField(
+          controller: controller,
           inputFormatters: formatter,
           initialValue: initialValue,
           validator: validator,

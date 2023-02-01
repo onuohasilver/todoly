@@ -72,14 +72,12 @@ class _IntroState extends State<Intro> {
           ),
           const YSpace(24),
           Padding(
-            padding: EdgeInsets.symmetric(
-                  horizontal: 30.w,
-                ) +
+            padding: EdgeInsets.symmetric(horizontal: 30.w) +
                 EdgeInsets.only(bottom: 30.h),
             child: BounceInUp(
               delay: const Duration(milliseconds: 500),
               child: CustomFlatButton(
-                onTap: () => Navigate.to(const TasksOverview()),
+                onTap: () => Navigate.to(const TodoOverview()),
                 label: "Start",
                 bgColor: Colors.black,
                 expand: true,
