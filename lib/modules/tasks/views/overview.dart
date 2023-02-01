@@ -2,9 +2,9 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:todoly/modules/tasks/models/todo_model.dart';
 import 'package:todoly/modules/tasks/view_models/todo_view_model.dart';
 import 'package:todoly/modules/tasks/views/add_task.dart';
+import 'package:todoly/modules/tasks/views/widgets/sort_modal.dart';
 import 'package:todoly/modules/tasks/views/widgets/todo_card.dart';
 import 'package:todoly/widgets/custom_overlays.dart';
 import 'package:todoly/widgets/layout/box_sizing.dart';
@@ -19,30 +19,32 @@ class TodoOverview extends StatefulWidget {
 }
 
 class _TodoOverviewState extends State<TodoOverview> {
-  List<TodoModel>? models;
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<TodoViewModel>(context, listen: false).fetchData();
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    // TodoViewModel tvm = Provider.of<TodoViewModel>(context);
+
     return Consumer<TodoViewModel>(
       builder: (context, viewModel, _) {
         return Scaffold(
-          backgroundColor: const Color(0xFFF8F8F8),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () => CustomOverlays().showSheet(child: AddTask()),
-            backgroundColor: Colors.black,
-            child: const Icon(Icons.add),
-          ),
-          body: FutureBuilder<List<TodoModel>>(
-              future: viewModel.fetchData(),
-              builder: (context, snapshot) {
-                // log(snapshot.data.toString());
-                if (snapshot.data == null) {
-                  return const Center(child: CircularProgressIndicator());
-                } else {
-                  // log("snapshot.data.toString()");
-                  models = snapshot.data!;
-
-                  return Padding(
+            backgroundColor: const Color(0xFFF8F8F8),
+            floatingActionButton: FloatingActionButton(
+                onPressed: () =>
+                    CustomOverlays().showSheet(child: const AddTask()),
+                backgroundColor: Colors.black,
+                child: const Icon(Icons.add)),
+            body: viewModel.todo == null
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Padding(
                     padding: EdgeInsets.symmetric(horizontal: 25.w),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,10 +75,8 @@ class _TodoOverviewState extends State<TodoOverview> {
                                           fontSize: 24, color: Colors.grey)),
                             ),
                             FadeIn(
-                              child: Image.asset(
-                                "assets/avatar.png",
-                                height: 50,
-                              ),
+                              child:
+                                  Image.asset("assets/avatar.png", height: 50),
                             )
                           ],
                         ),
@@ -88,7 +88,8 @@ class _TodoOverviewState extends State<TodoOverview> {
                                 child: TaskStatusCard(
                                     color: Theme.of(context).cardColor,
                                     label: "Pending\nTasks",
-                                    value: "23"),
+                                    value:
+                                        "${viewModel.getPendingTodos().length}"),
                               ),
                             ),
                             const XSpace(10),
@@ -97,42 +98,55 @@ class _TodoOverviewState extends State<TodoOverview> {
                                 child: TaskStatusCard(
                                     color: Colors.lightBlue.shade800,
                                     label: "Completed\nTasks",
-                                    value: "10"),
+                                    value:
+                                        "${viewModel.getFinishedTodos().length}"),
                               ),
                             ),
                           ],
                         ),
                         const YSpace(30),
-                        Text("My tasks",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1!
-                                .copyWith(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    height: 1.5,
-                                    fontSize: 24)),
+                        // Text(viewModel.todo.toString()),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("My tasks",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .copyWith(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        height: 1.5,
+                                        fontSize: 24)),
+                            TextButton(
+                              child: Text("Sort By",
+                                  style: Theme.of(context).textTheme.bodyText1),
+                              onPressed: () {
+                                CustomOverlays()
+                                    .showSheet(child: const SortModal());
+                              },
+                            )
+                          ],
+                        ),
                         const YSpace(12),
+                        // Text(viewModel.todo.toString())
                         Expanded(
                           child: ListView.builder(
-                              itemCount: models?.length,
+                              itemCount: viewModel.todo?.length,
                               padding: EdgeInsets.zero,
                               itemBuilder: (context, index) {
                                 return BounceInUp(
-                                    key: Key(models![index].id.toString()),
-                                    // key: (models![index].title),
+                                    key: Key(
+                                        viewModel.todo![index].id.toString()),
                                     duration:
                                         Duration(milliseconds: index * 150),
-                                    // duration: Duration(seconds: index * 60),
-                                    child: Todocard(model: models![index]));
+                                    child: Todocard(
+                                        model: viewModel.todo![index]));
                               }),
-                        )
+                        ),
                       ],
                     ),
-                  );
-                }
-              }),
-        );
+                  ));
       },
     );
   }

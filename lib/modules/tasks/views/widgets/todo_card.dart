@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:todoly/modules/tasks/models/todo_model.dart';
 import 'package:todoly/modules/tasks/view_models/todo_view_model.dart';
+import 'package:todoly/widgets/layout/box_sizing.dart';
 
 class Todocard extends StatelessWidget {
   const Todocard({
@@ -23,6 +25,12 @@ class Todocard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const YSpace(5),
+              Container(
+                  height: 2.h,
+                  width: 25.w,
+                  color: priorityColor(model.priority),
+                  margin: EdgeInsets.only(left: 10.w)),
               Row(
                 children: [
                   Checkbox(
@@ -55,5 +63,18 @@ class Todocard extends StatelessWidget {
         ),
       );
     });
+  }
+}
+
+Color priorityColor(String priority) {
+  switch (priority) {
+    case "Low":
+      return Colors.blue.shade900;
+    case "Medium":
+      return Colors.amber.shade900;
+    case "High":
+      return Colors.red.shade900;
+    default:
+      return Colors.red;
   }
 }

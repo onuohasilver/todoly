@@ -32,7 +32,9 @@ class TaskStatusCard extends StatelessWidget {
                 style: Theme.of(context).textTheme.headline4!.copyWith(
                     color: color,
                     fontWeight: FontWeight.bold,
-                    decoration: TextDecoration.lineThrough)),
+                    decoration: label.contains("Complete")
+                        ? TextDecoration.lineThrough
+                        : TextDecoration.none)),
           ),
           Expanded(
             child: Column(

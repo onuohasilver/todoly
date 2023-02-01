@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:todoly/core/navigator.dart';
 import 'package:todoly/modules/tasks/models/todo_model.dart';
 import 'package:todoly/modules/tasks/view_models/todo_view_model.dart';
+import 'package:todoly/modules/tasks/views/widgets/todo_card.dart';
 import 'package:todoly/widgets/buttons/custom_flat_button.dart';
 import 'package:todoly/widgets/inputs/custom_text_field.dart';
 import 'package:todoly/widgets/layout/box_sizing.dart';
@@ -44,9 +45,7 @@ class _AddTaskState extends State<AddTask> {
               ),
               const YSpace(12),
               CustomTextField(
-                label: "Title",
-                controller: titleCtrl,
-              ),
+                  label: "Title", controller: titleCtrl, maxLines: 3),
               const YSpace(12),
               Text(
                 "Set Priority",
@@ -59,10 +58,6 @@ class _AddTaskState extends State<AddTask> {
                 children: [
                   Row(
                     children: [
-                      Text(
-                        "Low",
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
                       Radio(
                           value: "Low",
                           groupValue: priority,
@@ -71,14 +66,17 @@ class _AddTaskState extends State<AddTask> {
                               priority = _.toString();
                             });
                           }),
+                      Text(
+                        "Low",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6!
+                            .copyWith(color: priorityColor("Low")),
+                      ),
                     ],
                   ),
                   Row(
                     children: [
-                      Text(
-                        "Medium",
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
                       Radio(
                           value: "Medium",
                           groupValue: priority,
@@ -87,14 +85,17 @@ class _AddTaskState extends State<AddTask> {
                               priority = _.toString();
                             });
                           }),
+                      Text(
+                        "Medium",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6!
+                            .copyWith(color: priorityColor("Medium")),
+                      ),
                     ],
                   ),
                   Row(
                     children: [
-                      Text(
-                        "High",
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
                       Radio(
                           value: "High",
                           groupValue: priority,
@@ -103,6 +104,13 @@ class _AddTaskState extends State<AddTask> {
                               priority = _.toString();
                             });
                           }),
+                      Text(
+                        "High",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6!
+                            .copyWith(color: priorityColor("High")),
+                      ),
                     ],
                   ),
                 ],

@@ -52,7 +52,11 @@ class CustomFlatButton extends StatelessWidget {
                     .bodyText1!
                     .copyWith(color: color ?? Colors.white, height: 1.5),
               ),
-          if (suffix != null) suffix!,
+          if (suffix != null)
+            Padding(
+              padding: const EdgeInsets.only(left: 18.0),
+              child: suffix!,
+            ),
         ],
       ),
     );

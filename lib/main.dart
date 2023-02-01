@@ -14,7 +14,7 @@ late Database database;
 
 Future<void> initDB() async {
   database = await openDatabase(
-    'todo',
+    'todo_app',
     version: 1,
     onCreate: (Database db, int version) async {
       await db.execute('''
