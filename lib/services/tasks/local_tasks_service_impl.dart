@@ -14,10 +14,11 @@ const String columnPriority = 'priority';
 ///
 /// It uses sqflite package to interact with local SQLite database
 class LocalTasksServiceImpl extends LocalTasksService {
-  final Database db;
+  // @override
+  final Database dba;
 
   /// Constructor to initialize the database instance
-  LocalTasksServiceImpl({required this.db});
+  LocalTasksServiceImpl({required this.dba}) : super(dba);
 
   /// Method to fetch data from the local database
   Future<List<TodoModel>> fetchData() async {

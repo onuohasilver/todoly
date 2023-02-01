@@ -19,6 +19,6 @@ Future<void> setupLocator() async {
 
   // Register the implementation of LocalTasksService as a factory
   locator.registerFactory<LocalTasksServiceImpl>(
-    () => LocalTasksServiceImpl(db: locator()),
+    () => LocalTasksServiceImpl(dba: locator()),
   );
 }

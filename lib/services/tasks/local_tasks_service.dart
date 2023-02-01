@@ -1,7 +1,11 @@
+import 'package:sqflite/sqlite_api.dart';
 import 'package:todoly/modules/tasks/models/todo_model.dart';
 
 /// Abstract class that defines an interface for interacting with local task data
 abstract class LocalTasksService {
+  LocalTasksService(this.db);
+  final Database db;
+
   /// Method to insert a to-do item into the local database
   Future<TodoModel> insert(TodoModel todo);
 
