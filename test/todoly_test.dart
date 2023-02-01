@@ -14,7 +14,6 @@ import 'todoly_test.mocks.dart';
 void main() {
   late Database database;
   late MockLocalTasksServiceImpl taskService;
-  late MockTodoRepositoryImpl todoRepo;
 
   String databaseRules = '''
 create table $tableTodo ( 
@@ -31,7 +30,7 @@ create table $tableTodo (
     database = await databaseFactoryFfi.openDatabase(inMemoryDatabasePath);
     await database.execute(databaseRules);
     taskService = MockLocalTasksServiceImpl();
-    todoRepo = MockTodoRepositoryImpl();
+    // todoRepo = MockTodoRepositoryImpl();
 
     when(taskService.insert(any)).thenAnswer((_) async => testTask);
     when(taskService.update(any)).thenAnswer((_) async => 1);
@@ -49,23 +48,22 @@ create table $tableTodo (
     });
 
     test('update', () async {
-      expect(await taskService.insert(testTask), testTask);
-      verify(taskService.insert(testTask));
+      expect(await taskService.update(testTask.copyWith(done: true)), 1);
     });
 
     test('delete', () async {
-      expect(await taskService.insert(testTask), testTask);
-      verify(taskService.insert(testTask));
+      expect(await taskService.delete(testTask.id), 1);
+      verify(taskService.delete(testTask.id));
     });
 
     test('getToDo', () async {
-      expect(await taskService.insert(testTask), testTask);
-      verify(taskService.insert(testTask));
+      expect(await taskService.getTodo(testTask.id), testTask);
+      verify(taskService.getTodo(testTask.id));
     });
 
     test('fetchData', () async {
-      expect(await taskService.insert(testTask), testTask);
-      verify(taskService.insert(testTask));
+      expect(await taskService.fetchData(), taskList);
+      verify(taskService.fetchData());
     });
   });
 }
